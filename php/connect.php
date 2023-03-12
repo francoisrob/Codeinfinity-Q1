@@ -16,7 +16,7 @@ $collection = $client->codeinfinity->users;
 $name = htmlspecialchars($_POST['name'], ENT_QUOTES);
 $surname = htmlspecialchars($_POST['surname'], ENT_QUOTES);
 $id = filter_var($_POST['userid'], FILTER_SANITIZE_NUMBER_INT);
-$dob = date('Y-m-d', strtotime($_POST['userdob']));
+$dob = date('d/m/Y', strtotime($_POST['userdob']));
 
 // Check if all fields are filled in
 if (isempty($name, $surname, $id, $dob)) {
@@ -84,8 +84,7 @@ function validid($id, $collection)
 function validdob($dob, $id)
 {
     $iddob = substr($id, 0, 6);
-    $dob = date('Ymd', strtotime($dob));
-    $dob = substr($dob, 2, 8);
+    $dob = substr($dob, 8, 2) . substr($dob, 3, 2) . substr($dob, 0, 2);
     if ($dob == $iddob) {
         $dobvalid = true;
     } else {
